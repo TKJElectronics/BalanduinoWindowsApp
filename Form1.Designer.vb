@@ -40,6 +40,7 @@ Partial Class Form1
         Me.BatteryLevel = New System.Windows.Forms.Label()
         Me.MCU = New System.Windows.Forms.Label()
         Me.FWVersion = New System.Windows.Forms.Label()
+        Me.EEPROMVersion = New System.Windows.Forms.Label()
         Me.AppVersion = New System.Windows.Forms.Label()
         Me.PID_D = New System.Windows.Forms.Label()
         Me.PID_I = New System.Windows.Forms.Label()
@@ -47,7 +48,6 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.LineShape1 = New Microsoft.VisualBasic.PowerPacks.LineShape()
-        Me.RunTimer = New System.Windows.Forms.Timer(Me.components)
         Me.MouseReleaseTimer = New System.Windows.Forms.Timer(Me.components)
         Me.dataGraphTimer = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1.SuspendLayout()
@@ -60,7 +60,7 @@ Partial Class Form1
         'TextBox1
         '
         Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.Location = New System.Drawing.Point(931, 18)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
@@ -71,8 +71,8 @@ Partial Class Form1
         'TabControl1
         '
         Me.TabControl1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
@@ -127,7 +127,7 @@ Partial Class Form1
         'JoystickCircle
         '
         Me.JoystickCircle.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.JoystickCircle.BorderWidth = 3
         Me.JoystickCircle.Location = New System.Drawing.Point(3, 2)
         Me.JoystickCircle.Name = "JoystickCircle"
@@ -147,8 +147,8 @@ Partial Class Form1
         'PictureBox1
         '
         Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(689, 334)
@@ -171,6 +171,7 @@ Partial Class Form1
         Me.InfoBox.Controls.Add(Me.BatteryLevel)
         Me.InfoBox.Controls.Add(Me.MCU)
         Me.InfoBox.Controls.Add(Me.FWVersion)
+        Me.InfoBox.Controls.Add(Me.EEPROMVersion)
         Me.InfoBox.Controls.Add(Me.AppVersion)
         Me.InfoBox.Controls.Add(Me.PID_D)
         Me.InfoBox.Controls.Add(Me.PID_I)
@@ -185,41 +186,41 @@ Partial Class Form1
         Me.InfoBox.TabStop = False
         Me.InfoBox.Text = "Info"
         '
-        'TargetAngle
-        '
-        Me.TargetAngle.AutoSize = True
-        Me.TargetAngle.Location = New System.Drawing.Point(13, 242)
-        Me.TargetAngle.Name = "TargetAngle"
-        Me.TargetAngle.Size = New System.Drawing.Size(71, 13)
-        Me.TargetAngle.TabIndex = 14
-        Me.TargetAngle.Text = "Target Angle:"
-        '
         'RunTime
         '
         Me.RunTime.AutoSize = True
-        Me.RunTime.Location = New System.Drawing.Point(13, 129)
+        Me.RunTime.Location = New System.Drawing.Point(13, 147)
         Me.RunTime.Name = "RunTime"
         Me.RunTime.Size = New System.Drawing.Size(49, 13)
-        Me.RunTime.TabIndex = 13
-        Me.RunTime.Text = "Runtime:"
+        Me.RunTime.TabIndex = 15
+        Me.RunTime.Text = "Run Time:"
         '
         'BatteryLevel
         '
         Me.BatteryLevel.AutoSize = True
-        Me.BatteryLevel.Location = New System.Drawing.Point(13, 111)
+        Me.BatteryLevel.Location = New System.Drawing.Point(13, 129)
         Me.BatteryLevel.Name = "BatteryLevel"
         Me.BatteryLevel.Size = New System.Drawing.Size(68, 13)
-        Me.BatteryLevel.TabIndex = 12
-        Me.BatteryLevel.Text = "Battery level:"
+        Me.BatteryLevel.TabIndex = 14
+        Me.BatteryLevel.Text = "Battery Level:"
         '
         'MCU
         '
         Me.MCU.AutoSize = True
-        Me.MCU.Location = New System.Drawing.Point(13, 93)
+        Me.MCU.Location = New System.Drawing.Point(13, 111)
         Me.MCU.Name = "MCU"
         Me.MCU.Size = New System.Drawing.Size(34, 13)
-        Me.MCU.TabIndex = 11
+        Me.MCU.TabIndex = 13
         Me.MCU.Text = "MCU:"
+        '
+        'EEPROMVersion
+        '
+        Me.EEPROMVersion.AutoSize = True
+        Me.EEPROMVersion.Location = New System.Drawing.Point(13, 93)
+        Me.EEPROMVersion.Name = "EEPROMVersion"
+        Me.EEPROMVersion.Size = New System.Drawing.Size(90, 13)
+        Me.EEPROMVersion.TabIndex = 12
+        Me.EEPROMVersion.Text = "EEPROM Version:"
         '
         'FWVersion
         '
@@ -227,7 +228,7 @@ Partial Class Form1
         Me.FWVersion.Location = New System.Drawing.Point(13, 75)
         Me.FWVersion.Name = "FWVersion"
         Me.FWVersion.Size = New System.Drawing.Size(90, 13)
-        Me.FWVersion.TabIndex = 10
+        Me.FWVersion.TabIndex = 11
         Me.FWVersion.Text = "Firmware Version:"
         '
         'AppVersion
@@ -236,13 +237,22 @@ Partial Class Form1
         Me.AppVersion.Location = New System.Drawing.Point(13, 57)
         Me.AppVersion.Name = "AppVersion"
         Me.AppVersion.Size = New System.Drawing.Size(67, 13)
-        Me.AppVersion.TabIndex = 9
+        Me.AppVersion.TabIndex = 10
         Me.AppVersion.Text = "App Version:"
+        '
+        'TargetAngle
+        '
+        Me.TargetAngle.AutoSize = True
+        Me.TargetAngle.Location = New System.Drawing.Point(13, 252)
+        Me.TargetAngle.Name = "TargetAngle"
+        Me.TargetAngle.Size = New System.Drawing.Size(71, 13)
+        Me.TargetAngle.TabIndex = 9
+        Me.TargetAngle.Text = "Target Angle:"
         '
         'PID_D
         '
         Me.PID_D.AutoSize = True
-        Me.PID_D.Location = New System.Drawing.Point(13, 216)
+        Me.PID_D.Location = New System.Drawing.Point(13, 234)
         Me.PID_D.Name = "PID_D"
         Me.PID_D.Size = New System.Drawing.Size(18, 13)
         Me.PID_D.TabIndex = 8
@@ -251,7 +261,7 @@ Partial Class Form1
         'PID_I
         '
         Me.PID_I.AutoSize = True
-        Me.PID_I.Location = New System.Drawing.Point(13, 198)
+        Me.PID_I.Location = New System.Drawing.Point(13, 216)
         Me.PID_I.Name = "PID_I"
         Me.PID_I.Size = New System.Drawing.Size(13, 13)
         Me.PID_I.TabIndex = 7
@@ -260,7 +270,7 @@ Partial Class Form1
         'PID_P
         '
         Me.PID_P.AutoSize = True
-        Me.PID_P.Location = New System.Drawing.Point(13, 180)
+        Me.PID_P.Location = New System.Drawing.Point(13, 198)
         Me.PID_P.Name = "PID_P"
         Me.PID_P.Size = New System.Drawing.Size(20, 13)
         Me.PID_P.TabIndex = 6
@@ -269,7 +279,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(13, 157)
+        Me.Label1.Location = New System.Drawing.Point(13, 175)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(96, 13)
         Me.Label1.TabIndex = 5
@@ -290,13 +300,8 @@ Partial Class Form1
         Me.LineShape1.Name = "LineShape1"
         Me.LineShape1.X1 = 13
         Me.LineShape1.X2 = 190
-        Me.LineShape1.Y1 = 155
-        Me.LineShape1.Y2 = 155
-        '
-        'RunTimer
-        '
-        Me.RunTimer.Enabled = True
-        Me.RunTimer.Interval = 1000
+        Me.LineShape1.Y1 = 173
+        Me.LineShape1.Y2 = 173
         '
         'MouseReleaseTimer
         '
@@ -316,7 +321,7 @@ Partial Class Form1
         Me.Controls.Add(Me.TextBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
-        Me.Text = "Serial log"
+        Me.Text = "Balanduino Windows App"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
@@ -337,6 +342,7 @@ Partial Class Form1
     Friend WithEvents BatteryLevel As System.Windows.Forms.Label
     Friend WithEvents MCU As System.Windows.Forms.Label
     Friend WithEvents FWVersion As System.Windows.Forms.Label
+    Friend WithEvents EEPROMVersion As System.Windows.Forms.Label
     Friend WithEvents AppVersion As System.Windows.Forms.Label
     Friend WithEvents PID_D As System.Windows.Forms.Label
     Friend WithEvents PID_I As System.Windows.Forms.Label
@@ -344,7 +350,6 @@ Partial Class Form1
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents ShapeContainer1 As Microsoft.VisualBasic.PowerPacks.ShapeContainer
     Friend WithEvents LineShape1 As Microsoft.VisualBasic.PowerPacks.LineShape
-    Friend WithEvents RunTimer As System.Windows.Forms.Timer
     Friend WithEvents TargetAngle As System.Windows.Forms.Label
     Friend WithEvents ShapeContainer2 As Microsoft.VisualBasic.PowerPacks.ShapeContainer
     Friend WithEvents JoystickCircle As Microsoft.VisualBasic.PowerPacks.OvalShape

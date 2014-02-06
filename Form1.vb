@@ -13,6 +13,7 @@ Public Class Form1
     Public Bluetooth As SerialDevice = New SerialDevice
     Dim waitForMouseRelease As Boolean = False
     Dim JoystickX, JoystickY As Double
+    Dim version = "0.1.0"
 
     Private Sub LoadCOMPorts()
         Dim ports As List(Of String) = ComPort.Names
@@ -54,17 +55,24 @@ Public Class Form1
 
             Case "I"
                 SetObjectText(FWVersion, "Firmware Version: " & splitMessage(1))
-                SetObjectText(MCU, "MCU: " & splitMessage(2))
-                SetObjectText(BatteryLevel, "Battery Level: " & splitMessage(3))
-                Dim rawMinutes As Double = Convert.ToDouble(splitMessage(4).Replace(".", ","))
-                Dim minutes, seconds As Integer
-                minutes = Math.Floor(rawMinutes)
-                seconds = (rawMinutes - minutes) * 60
+                SetObjectText(EEPROMVersion, "EEPROM Version: " & splitMessage(2))
+                SetObjectText(MCU, "MCU: " & splitMessage(3))
+
+                Exit Select
+
+            Case "R"
+                SetObjectText(BatteryLevel, "Battery Level: " & splitMessage(1))
+                Dim rawMinutes As Double = Convert.ToDouble(splitMessage(2).Replace(".", ","))
+                Dim minutes As Integer = Math.Floor(rawMinutes)
+                Dim seconds As Integer = (rawMinutes - minutes) * 60
                 SetObjectText(RunTime, "Run Time: " & minutes & " min " & seconds & " sec")
 
                 Exit Select
 
             Case "P"
+                If splitMessage.Length <= 1 Then
+                    Exit Select
+                End If
                 SetObjectText(PID_P, "P: " & splitMessage(1))
                 SetObjectText(PID_I, "I: " & splitMessage(2))
                 SetObjectText(PID_D, "D: " & splitMessage(3))
@@ -103,8 +111,6 @@ Public Class Form1
 
     Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If Bluetooth.Connected Then
-            RunTimer.Stop()
-            RunTimer.Enabled = False
             MouseReleaseTimer.Stop()
             MouseReleaseTimer.Enabled = False
             dataGraphTimer.Stop()
@@ -117,6 +123,8 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         LoadCOMPorts()
+
+        SetObjectText(AppVersion, "App Version: " & version)
 
         JoystickLine.X1 = JoystickCircle.Location.X + (JoystickCircle.Width / 2)
         JoystickLine.X2 = JoystickLine.X1
@@ -152,6 +160,7 @@ Public Class Form1
             Bluetooth.SendString("GP;")
             Bluetooth.SendString("GS;")
             Bluetooth.SendString("GK;")
+            Bluetooth.SendString("RB;")
             ConnectCOM.Image = Nothing
             SetObjectText(ConnectCOM, "Disconnect")
             SetObjectHeight(InfoBox, 272)
@@ -206,16 +215,11 @@ Public Class Form1
             End If
         ElseIf (Not BluetoothConnectThread.IsAlive) Then
             Bluetooth.SendString("IS;")
+            Bluetooth.SendString("RS;")
             Bluetooth.Disconnect()
             ConnectCOM.Text = "Connect"
             InfoBox.Height = 50
             'StatusLabel.Text = "Disconnected"
-        End If
-    End Sub
-
-    Private Sub RunTimer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RunTimer.Tick
-        If Bluetooth.Connected Then
-            Bluetooth.SendString("GI;")
         End If
     End Sub
 
@@ -288,7 +292,7 @@ Public Class Form1
                 If (Bluetooth.Connected) Then
                     Bluetooth.SendString("CJ," & Math.Round(JoystickX, 4).ToString().Replace(",", ".") & "," & Math.Round(JoystickY, 4).ToString().Replace(",", ".") & ";")
                     Invoke(New Action(Of String)(AddressOf AppendOutput), "CJ," & Math.Round(JoystickX, 4).ToString().Replace(",", ".") & "," & Math.Round(JoystickY, 4).ToString().Replace(",", ".") & ";")
-                End If                
+                End If
             Else
                 JoystickLine.X2 = JoystickLine.X1
                 JoystickLine.Y2 = JoystickLine.Y1
@@ -429,7 +433,7 @@ Public Class Form1
     End Sub
 
     Private Sub DrawGridAndAxAndGraph(ByVal bmp As Bitmap, ByVal accPath As GraphicsPath, ByVal gyroPath As GraphicsPath, ByVal kalmanPath As GraphicsPath)
-        Dim virtualY As Double        
+        Dim virtualY As Double
 
         Using g As Graphics = Graphics.FromImage(bmp)
             Dim fontHeight As Single = g.MeasureString("test", New Font("Arial Black", 10)).Height
@@ -513,7 +517,6 @@ Public Class Form1
     End Sub
 
     Private Sub TabControl1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles TabControl1.SelectedIndexChanged
-        RunTimer.Enabled = False
         MouseReleaseTimer.Enabled = False
 
         If (dataGraphTimer.Enabled = True) Then
@@ -523,9 +526,7 @@ Public Class Form1
             dataGraphTimer.Enabled = False
         End If
 
-        If TabControl1.SelectedIndex = 0 Then
-            RunTimer.Enabled = True
-        ElseIf TabControl1.SelectedIndex = 1 Then
+        If TabControl1.SelectedIndex = 1 Then
             MouseReleaseTimer.Enabled = True
         ElseIf TabControl1.SelectedIndex = 2 Then
             accPoints = New Double(PictureBox1.Width) {}
