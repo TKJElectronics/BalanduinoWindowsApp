@@ -1,5 +1,5 @@
 # Balanduino Windows application
-#### Developed by TKJ Electronics 2013-2014
+#### Developed by Thomas Jespersen, TKJ Electronics 2013-2014
 
 The code is released under the GNU General Public License.
 _________
